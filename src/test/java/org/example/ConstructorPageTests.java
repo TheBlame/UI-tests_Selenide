@@ -1,7 +1,6 @@
 package org.example;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
 import io.qameta.allure.junit4.DisplayName;
 import org.example.page_object.ConstructorPage;
 import org.junit.After;
@@ -12,13 +11,11 @@ import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static com.codeborne.selenide.Selenide.open;
 import static org.example.helpers.Url.*;
 
-public class ConstructorPageTests {
+public class ConstructorPageTests extends AbstractTest {
     private ConstructorPage constructorPage;
 
     @Before
     public void setUp() {
-        Configuration.browserSize = "1920x1080";
-        System.getProperty("webdriver.chrome.driver");
         constructorPage = open(CONSTRUCTOR, ConstructorPage.class);
         constructorPage.waitToLoadConstructorPage();
     }

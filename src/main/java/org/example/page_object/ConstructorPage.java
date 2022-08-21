@@ -18,10 +18,10 @@ public class ConstructorPage extends Header {
     @FindBy(how = How.CSS, using = "section.BurgerIngredients_ingredients__1N8v2 div:nth-child(2) div:nth-child(3)")
     private SelenideElement scrollToFillingButton;
 
-    @FindBy(how = How.CSS, using = ".button_button__33qZ0.button_button_type_primary__1O7Bx.button_button_size_large__G21Vg")
+    @FindBy(how = How.CSS, using = ".button_button__33qZ0")
     private SelenideElement enterToAccountButton;
 
-    @FindBy(how = How.CSS, using = ".tab_tab__1SPyG.tab_tab_type_current__2BEPc.pt-4.pr-10.pb-4.pl-10.noselect")
+    @FindBy(how = How.CSS, using = ".tab_tab_type_current__2BEPc")
     private SelenideElement selectedCategory;
 
     public LoginPage enterToAccountButtonClick() {

@@ -9,10 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
+import static org.example.helpers.Url.*;
 
 public class Utils {
-    private static final String BASE_URI = "https://stellarburgers.nomoreparties.site";
-
     private static final RequestSpecification REQUEST_SPECIFICATION =
             new RequestSpecBuilder()
                     .setContentType(ContentType.JSON)
@@ -25,15 +24,14 @@ public class Utils {
                     .baseUri(BASE_URI)
                     .auth()
                     .oauth2(token.substring(7))
-                    .delete("/api/auth/user")
-                    .then()
-                    .statusCode(202);
+                    .delete("/api/auth/user");
         }
     }
 
     public static Map<String, String> getTokens(String email, String password) {
-        String request = "{\"email\": \"" + email + "\", " +
-                "\"password\": \"" + password + "\"}";
+        Map<String, String> request = Map.of(
+                "email", email,
+                "password", password);
         Response response = given()
                 .spec(REQUEST_SPECIFICATION)
                 .body(request)
@@ -53,9 +51,10 @@ public class Utils {
     }
 
     public static void registerUser(String name, String email, String password) {
-        String request = "{\"name\": \"" + name + "\", " +
-                "\"email\": \"" + email + "\", " +
-                "\"password\": \"" + password + "\"}";
+        Map<String, String> request = Map.of(
+                "name", name,
+                "email", email,
+                "password", password);
         given()
                 .spec(REQUEST_SPECIFICATION)
                 .body(request)

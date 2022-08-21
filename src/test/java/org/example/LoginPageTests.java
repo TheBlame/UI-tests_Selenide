@@ -1,6 +1,5 @@
 package org.example;
 
-import com.codeborne.selenide.Configuration;
 import com.github.javafaker.Faker;
 import io.qameta.allure.junit4.DisplayName;
 import org.example.page_object.*;
@@ -14,8 +13,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.example.helpers.Url.*;
 
-public class LoginPageTests {
-    private static final Faker FAKER = new Faker();
+public class LoginPageTests extends AbstractTest {
     private String name;
     private String email;
     private String password;
@@ -28,8 +26,6 @@ public class LoginPageTests {
 
     @Before
     public void setUp() {
-        Configuration.browserSize = "1920x1080";
-        System.getProperty("webdriver.chrome.driver");
         name = FAKER.name().username();
         email = FAKER.internet().emailAddress();
         password = FAKER.bothify("?#?#?#?#");

@@ -2,10 +2,12 @@ package org.example;
 
 import com.codeborne.selenide.Configuration;
 import com.github.javafaker.Faker;
+import org.example.helpers.UserClient;
 import org.junit.BeforeClass;
 
 public abstract class AbstractTest {
-    public static final Faker FAKER = new Faker();
+    public static Faker faker = new Faker();
+    public static UserClient userClient = new UserClient();
 
     @BeforeClass
     public static void init() {

@@ -1,6 +1,5 @@
 package org.example;
 
-import com.github.javafaker.Faker;
 import io.qameta.allure.junit4.DisplayName;
 import org.example.page_object.*;
 import org.junit.After;
@@ -8,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static com.codeborne.selenide.Selenide.*;
-import static org.example.helpers.Utils.*;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.example.helpers.Url.*;
@@ -26,15 +24,15 @@ public class LoginPageTests extends AbstractTest {
 
     @Before
     public void setUp() {
-        name = FAKER.name().username();
-        email = FAKER.internet().emailAddress();
-        password = FAKER.bothify("?#?#?#?#");
-        registerUser(name, email, password);
+        name = faker.name().username();
+        email = faker.internet().emailAddress();
+        password = faker.bothify("?#?#?#?#");
+        userClient.registerUser(name, email, password);
     }
 
     @After
     public void clean() {
-        deleteUser(token);
+        userClient.deleteUser(token);
         closeWebDriver();
     }
 
@@ -44,7 +42,7 @@ public class LoginPageTests extends AbstractTest {
         constructorPage = open(CONSTRUCTOR, ConstructorPage.class);
         constructorPage.waitToLoadConstructorPage();
         loginPage = constructorPage.enterToAccountButtonClick();
-        commonSteps();
+        loginAndCheckToken();
     }
 
     @Test
@@ -53,7 +51,7 @@ public class LoginPageTests extends AbstractTest {
         constructorPage = open(CONSTRUCTOR, ConstructorPage.class);
         constructorPage.waitToLoadConstructorPage();
         loginPage = constructorPage.accountButtonClickWhenNotLogged();
-        commonSteps();
+        loginAndCheckToken();
     }
 
     @Test
@@ -62,7 +60,7 @@ public class LoginPageTests extends AbstractTest {
         registerPage = open(REGISTER, RegisterPage.class);
         registerPage.waitForLoadRegisterPage();
         loginPage = registerPage.enterLinkClick();
-        commonSteps();
+        loginAndCheckToken();
     }
 
     @Test
@@ -71,10 +69,10 @@ public class LoginPageTests extends AbstractTest {
         passwordRestorePage = open(FORGOT_PASSWORD, PasswordRestorePage.class);
         passwordRestorePage.waitForLoadPasswordRestorePage();
         loginPage = passwordRestorePage.enterLinkClick();
-        commonSteps();
+        loginAndCheckToken();
     }
 
-    public void commonSteps() {
+    public void loginAndCheckToken() {
         loginPage.waitForLoadLoginPage();
         loginPage.emailFieldInput(email);
         loginPage.passwordFieldInput(password);

@@ -9,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static com.codeborne.selenide.Selenide.*;
-import static org.example.helpers.Utils.*;
 import static org.example.helpers.Url.*;
 
 public class RegisterPageTests extends AbstractTest {
@@ -21,22 +20,22 @@ public class RegisterPageTests extends AbstractTest {
 
     @Before
     public void setUp() {
-        name = FAKER.name().username();
-        email = FAKER.internet().emailAddress();
+        name = faker.name().username();
+        email = faker.internet().emailAddress();
         registerPage = open(REGISTER, RegisterPage.class);
         registerPage.waitForLoadRegisterPage();
     }
 
     @After
     public void clean() {
-        deleteUser(getTokens(email, password).get("accessToken"));
+        userClient.deleteUser(userClient.getTokens(email, password).get("accessToken"));
         closeWebDriver();
     }
 
     @Test
     @DisplayName("Register with valid credentials")
     public void registerWithValidCredentials() {
-        password = FAKER.bothify("?#?#?#");
+        password = faker.bothify("?#?#?#");
         registerPage.nameFieldInput(name);
         registerPage.emailFieldInput(email);
         registerPage.passwordFieldInput(password);
@@ -48,7 +47,7 @@ public class RegisterPageTests extends AbstractTest {
     @Test
     @DisplayName("Register with invalid password")
     public void registerWithInvalidPassword() {
-        password = FAKER.bothify("?#?#?");
+        password = faker.bothify("?#?#?");
         registerPage.nameFieldInput(name);
         registerPage.emailFieldInput(email);
         registerPage.passwordFieldInput(password);

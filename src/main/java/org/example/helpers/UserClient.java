@@ -11,14 +11,14 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 import static org.example.helpers.Url.*;
 
-public class Utils {
+public class UserClient {
     private static final RequestSpecification REQUEST_SPECIFICATION =
             new RequestSpecBuilder()
                     .setContentType(ContentType.JSON)
                     .setBaseUri(BASE_URI)
                     .build();
 
-    public static void deleteUser(String token) {
+    public void deleteUser(String token) {
         if (token != null) {
             given()
                     .baseUri(BASE_URI)
@@ -28,7 +28,7 @@ public class Utils {
         }
     }
 
-    public static Map<String, String> getTokens(String email, String password) {
+    public Map<String, String> getTokens(String email, String password) {
         Map<String, String> request = Map.of(
                 "email", email,
                 "password", password);
@@ -50,7 +50,7 @@ public class Utils {
         return tokens;
     }
 
-    public static void registerUser(String name, String email, String password) {
+    public void registerUser(String name, String email, String password) {
         Map<String, String> request = Map.of(
                 "name", name,
                 "email", email,

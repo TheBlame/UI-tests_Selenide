@@ -10,7 +10,6 @@ import java.util.Map;
 
 import static com.codeborne.selenide.Selenide.*;
 import static org.example.helpers.Url.*;
-import static org.example.helpers.Utils.*;
 
 public class AccountPageTests extends AbstractTest {
     private ConstructorPage constructorPage;
@@ -20,11 +19,11 @@ public class AccountPageTests extends AbstractTest {
 
     @Before
     public void setUp() {
-        String name = FAKER.name().username();
-        String email = FAKER.internet().emailAddress();
-        String password = FAKER.bothify("?#?#?#?#");
-        registerUser(name, email, password);
-        tokens = getTokens(email, password);
+        String name = faker.name().username();
+        String email = faker.internet().emailAddress();
+        String password = faker.bothify("?#?#?#?#");
+        userClient.registerUser(name, email, password);
+        tokens = userClient.getTokens(email, password);
         constructorPage = open(CONSTRUCTOR, ConstructorPage.class);
         localStorage().setItem("accessToken", tokens.get("accessToken"));
         localStorage().setItem("refreshToken", tokens.get("refreshToken"));
@@ -33,7 +32,7 @@ public class AccountPageTests extends AbstractTest {
 
     @After
     public void clean() {
-        deleteUser(tokens.get("accessToken"));
+        userClient.deleteUser(tokens.get("accessToken"));
         closeWebDriver();
     }
 
